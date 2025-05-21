@@ -1,0 +1,5 @@
+src/jni/obj
+src/jni/libs
+out/
+src/image_payload/payload.png
+src/image_payload/offset

@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="top.dmpstr.overlay">
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application
+        android:label="OverlayServiceApp"
+        android:allowBackup="false">
+        <service android:name=".OverlayService"
+            android:exported="true" />
+    </application>
+</manifest>

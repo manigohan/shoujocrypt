@@ -1,0 +1,28 @@
+apply plugin: 'com.android.application'
+
+android {
+    namespace "top.dmpstr.overlay"
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "top.dmpstr.overlay"
+        minSdk 29
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        // Required for overlay permission
+        manifestPlaceholders = [ "appName": "OverlayServiceApp" ]
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+}

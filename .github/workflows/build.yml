@@ -1,0 +1,71 @@
+name: Build
+
+on:
+  push:
+
+jobs:
+  build_shoujo:
+    name: Build ShoujoCrypt
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v4
+      with:
+        lfs: true
+    - name: Pull LFS objects
+      run: git lfs checkout
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: 21
+    - name: NDK Setup
+      uses: nttld/setup-ndk@v1.5.0
+      with:
+        ndk-version: r27c
+    - name: Build ShoujoCrypt payload
+      run: |
+        ndk-build
+      working-directory: src/jni
+    - name: Upload lib
+      uses: actions/upload-artifact@v4
+      with:
+        name: lib
+        path: src/jni/libs
+    - name: Upload obj
+      uses: actions/upload-artifact@v4.6.2
+      with:
+        name: obj
+        path: src/obj
+
+  build_module:
+    name: Build OverlayService and module
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v4
+      with:
+        lfs: true
+    - name: Pull LFS objects
+      run: git lfs checkout
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: 21
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+    - name: Build with Gradle
+      run: |
+        ./gradlew build
+        ./gradlew assembleDebug
+      working-directory: src/OverlayServiceProject
+    - name: Build module
+      run: |
+        cp src/OverlayServiceProject/app/build/outputs/apk/debug/app-debug.apk module/overlay.apk
+        bash ./build.sh
+    - name: Upload module
+      uses: actions/upload-artifact@v4
+      with:
+        name: module
+        path: out/shoujocrypt.zip
